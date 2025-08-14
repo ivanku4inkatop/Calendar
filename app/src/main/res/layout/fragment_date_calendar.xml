@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".AddTask.DateCalendarFragment">
+
+    <Button
+        android:id="@+id/close"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:text="@string/close" />
+
+    <Button
+        android:id="@+id/previousMonth"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:text="@string/left" />
+
+    <Button
+        android:id="@+id/nextMonth"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:text="@string/right" />
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="50dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/MonView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/monday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/TueView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tuesday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/WedView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/wednesday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/ThuView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/thursday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/FriView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/friday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/SatView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/saturday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/SunView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sunday"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day19"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day21"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day26"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day27"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day28"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day29"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day30"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day31"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day32"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day33"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day34"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day35"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day36"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day37"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day38"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day39"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day41"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/day42"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26sp"
+                android:gravity="center"/>
+        </TableRow>
+
+
+    </TableLayout>
+
+</FrameLayout>

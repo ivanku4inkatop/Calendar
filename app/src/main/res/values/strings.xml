@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Calendar</string>
+    <string name="todo">TODO</string>
+    <string name="add">ADD</string>
+    <string name="add_name">Task\'s Name</string>
+    <string name="add_date">Chose Date</string>
+    <string name="is_important"> Is Important</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="close">X</string>
+    <string name="right">&gt;</string>
+    <string name="left">&lt;</string>
+    <string name="monday">M</string>
+    <string name="tuesday">T</string>
+    <string name="wednesday">W</string>
+    <string name="thursday">T</string>
+    <string name="friday">F</string>
+    <string name="saturday">S</string>
+    <string name="sunday">S</string>
+    <string name="time">Time</string>
+    <string name="ok">OK</string>
+    <string name="start">Start:</string>
+    <string name="end">End:</string>
+    <string name="description">Description…</string>
+</resources>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTask.AddTask">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/choseDate"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#040404"
+        android:paddingTop="0dp"
+        android:text="@string/add_date"
+        android:textColor="#C1BDBD"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasksName" />
+
+    <Switch
+        android:id="@+id/isTime"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:minHeight="48dp"
+        android:text="@string/time"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choseDate"
+        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+
+    <Button
+        android:id="@+id/addTask"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="monospace"
+        android:text="@string/add"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/timeSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:textSize="28sp"
+        app:layout_constraintStart_toEndOf="@+id/isTime"
+        app:layout_constraintTop_toBottomOf="@+id/choseDate" />
+
+    <EditText
+        android:id="@+id/descriptionTask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:hint="@string/description"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/addTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/isTime" />
+
+    <EditText
+        android:id="@+id/tasksName"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="5dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/add_name"
+        android:inputType="text"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor" />
+
+    <FrameLayout
+        android:id="@+id/timeLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/addTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/isTime"
+        app:layout_constraintTop_toBottomOf="@+id/choseDate">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
