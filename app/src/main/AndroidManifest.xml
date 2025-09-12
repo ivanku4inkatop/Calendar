@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calendar">
         <activity
+            android:name=".Templates.addTaskTemplate"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".TasksList.TasksList"
             android:exported="false" />
         <activity

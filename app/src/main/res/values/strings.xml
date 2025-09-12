@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Calendar</string>
     <string name="todo">TODO</string>
-    <string name="add">ADD</string>
+    <string name="add">SAVE</string>
     <string name="add_name">Task\'s Name</string>
     <string name="add_date">Chose Date</string>
     <string name="is_important"> Is Important</string>
@@ -21,4 +21,5 @@
     <string name="start">Start:</string>
     <string name="end">End:</string>
     <string name="description">Description…</string>
+    <string name="edit">EDIT</string>
 </resources>

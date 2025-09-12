@@ -1,5 +1,7 @@
 package com.example.calendar.AddTask;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -22,7 +25,7 @@ import com.example.calendar.DataBaseManager;
 import com.example.calendar.MainActivity;
 import com.example.calendar.R;
 import com.example.calendar.TasksList.TaskItem;
-import com.example.calendar.TasksList.TasksList;
+import com.example.calendar.TasksList.TasksAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +40,10 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
     private String nameTask, descriptionTask;
     private int id;
     private Calendar dateTask = null, timeStart = null, timeEnd = null;
+    TaskItem deleteItem = null;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
 
 
 
@@ -61,35 +68,64 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
         backBtn = findViewById(R.id.back);
         TimeFragment timeFragment = new TimeFragment();
 
+       deleteItem = getIntent().getParcelableExtra("edit_task", TaskItem.class);
+
+       if(deleteItem != null){
+           nameInp.setText(deleteItem.getName());
+           descriptionInp.setText(deleteItem.getDescription());
+           dateTask = deleteItem.getDate();
+           choseDateBtn.setText(dateFormat.format(dateTask.getTime()));
+
+           if(deleteItem.getTimeStart() != null && deleteItem.getTimeEnd() != null){
+                timeSwitch.setChecked(true);
+                String start = (deleteItem.getTimeStart() != null) ? timeFormat.format(deleteItem.getTimeStart().getTime()) : "-";
+                String end = (deleteItem.getTimeEnd() != null) ? timeFormat.format(deleteItem.getTimeEnd().getTime()) : "-";
+                timeTxt.setText(start + " - " + end);
+               timeTxt.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       timeButtonListener();
+                   }
+               });
+           }
+
+       }
+
         choseDateBtn.setOnClickListener(new  View.OnClickListener() {
             @Override
             public void onClick(View view){
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                DateCalendarFragment dateCalendar = new DateCalendarFragment();
-                ft.replace(R.id.calendarLayout, dateCalendar);
-                ft.commit();
+                openDateMenu();
             }
         });
 
         timeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 if (isChecked) {
                     TimeFragment timeFragment = new TimeFragment();
-                    ft.replace(R.id.timeLayout, timeFragment);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.timeLayout, timeFragment)
+                            .commit();
+                    timeTxt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            timeButtonListener();
+                        }
+                    });
                 } else {
                     Fragment current = getSupportFragmentManager().findFragmentById(R.id.timeLayout);
                     timeEnd = null;
                     timeStart = null;
                     timeTxt.setText("");
+                    timeTxt.setOnClickListener(null);
                     if (current != null) {
-                        ft.remove(current);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .remove(current)
+                                .commit();
                     }
                 }
-
-
-                ft.commit();
             }
         });
 
@@ -104,29 +140,80 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseManager dataBaseManager = DataBaseManager.instanceOfDataBase(AddTask.this);
-                nameTask = nameInp.getText().toString();
-                descriptionTask = descriptionInp.getText().toString();
-                id = TaskItem.getTasksArray().size();
-
-                TaskItem taskItem = new TaskItem(id, nameTask, descriptionTask, dateTask);
-                TaskItem.getTasksArray().add(taskItem);
-                dataBaseManager.addTask(taskItem);
-
-                Intent intent = new Intent(AddTask.this, MainActivity.class);
-                startActivity(intent);
+                taskChecker();
             }
         });
+    }
 
+    private void taskChecker(){
+        nameTask = nameInp.getText().toString();
+        descriptionTask = descriptionInp.getText().toString();
+        if(nameTask.trim().isEmpty()){
+            Toast.makeText(AddTask.this, "Write task's name!", Toast.LENGTH_SHORT).show();
+        } else if(dateTask == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(AddTask.this);
+            builder.setTitle("Chose Date")
+                    .setMessage("You forgot to chose the Date. Tasks will be automatically set on tomorrow")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dateTask = Calendar.getInstance();
+                            dateTask.add(Calendar.DAY_OF_MONTH, 1);
+                            saveData();
+                        }
+                    })
+                    .setNegativeButton("Set", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                            openDateMenu();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else{
+            saveData();
+        }
+    }
+
+    private void openDateMenu(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DateCalendarFragment dateCalendar = new DateCalendarFragment();
+        ft.replace(R.id.calendarLayout, dateCalendar);
+        ft.commit();
+    }
+
+    private void saveData(){
+        DataBaseManager dataBaseManager = DataBaseManager.instanceOfDataBase(AddTask.this);
+        id = TaskItem.getTasksArray().size();
+
+        if(deleteItem != null){
+            dataBaseManager.deleteTaskFromDB(deleteItem.getId());
+            TaskItem.getTasksArray().remove(deleteItem);
+            TasksAdapter adapter = new TasksAdapter(this, TaskItem.getTasksArray());
+        }
+
+        TaskItem taskItem = new TaskItem(id, nameTask, descriptionTask, dateTask, timeStart, timeEnd);
+        TaskItem.getTasksArray().add(taskItem);
+        dataBaseManager.addTask(taskItem);
+
+        Intent intent = new Intent(AddTask.this, MainActivity.class);
+        startActivity(intent);
     }
 
 
-
+    private void timeButtonListener(){
+        TimeFragment newFragment = new TimeFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.timeLayout, newFragment)
+                .commit();
+    }
     @Override
     public void SendDate(Calendar calendar) {
         dateTask = calendar;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String formattedDate = sdf.format(dateTask.getTime());
+        String formattedDate = dateFormat.format(dateTask.getTime());
 
         choseDateBtn.setText(formattedDate);
     }

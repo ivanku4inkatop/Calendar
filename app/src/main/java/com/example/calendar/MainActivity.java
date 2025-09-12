@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    TasksController tasksController;
+    TodayData todayData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         });
         FloatingActionButton addTask = findViewById(R.id.addTask);
         Button listBtn = findViewById(R.id.tasksListButton);
+
+        todayData = new TodayData();
+        tasksController = new TasksController(todayData);
+
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    public void addNewTaskButton(View v){
-        Intent intent = new Intent(this, AddTask.class);
-        startActivity(intent);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddTask.class);
+                startActivity(intent);
+            }
+        });
     }
 }

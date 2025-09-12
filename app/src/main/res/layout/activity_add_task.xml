@@ -52,9 +52,9 @@
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="monospace"
-        android:text="@string/add"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="50sp"
+        android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -134,6 +134,5 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

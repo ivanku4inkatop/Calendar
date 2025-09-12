@@ -16,7 +16,6 @@
         android:clickable="true"
         android:contentDescription="@string/todo"
         android:focusable="true"
-        android:onClick="addNewTaskButton"
         app:backgroundTint="#0B0909"
         app:fabCustomSize="60dp"
         app:fabSize="auto"
@@ -32,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add"
         tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="271dp" />
+        tools:layout_editor_absoluteY="271dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
