@@ -5,11 +5,9 @@ import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.calendar.DataBaseManager;
+import com.example.calendar.DataBase.TasksTable.TasksRepository;
+import com.example.calendar.MyApplication;
 import com.example.calendar.R;
 
 public class TasksList extends AppCompatActivity {
@@ -24,15 +22,13 @@ public class TasksList extends AppCompatActivity {
 
         tasksListView = findViewById(R.id.tasksListView);
 
-        loadFromDB();
+        TasksRepository repo = ((MyApplication) getApplication()).getTasksRepository();
+        repo.getAll().observe(this, tasks -> {
+            TasksAdapter adapter = new TasksAdapter(this, tasks);
+            tasksListView.setAdapter(adapter);
+        });
 
-        TasksAdapter tasksAdapter = new TasksAdapter(this, TaskItem.getTasksArray());
-        tasksListView.setAdapter(tasksAdapter);
     }
 
 
-    private void loadFromDB(){
-        DataBaseManager dataBaseManager = DataBaseManager.instanceOfDataBase(this);
-        dataBaseManager.populateTaskListArray();
-    }
 }

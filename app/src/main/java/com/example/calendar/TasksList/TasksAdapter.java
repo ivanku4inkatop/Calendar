@@ -14,22 +14,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.calendar.DataBaseManager;
+import com.example.calendar.DataBase.TasksTable.TaskEntity;
+import com.example.calendar.DataBase.TasksTable.TasksRepository;
+import com.example.calendar.MyApplication;
 import com.example.calendar.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TasksAdapter extends ArrayAdapter<TaskItem> {
-    public TasksAdapter(Context context, List<TaskItem> tasks) {
+public class TasksAdapter extends ArrayAdapter<TaskEntity> {
+    public TasksAdapter(Context context, List<TaskEntity> tasks) {
         super(context, 0, tasks);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        TaskItem taskItem = getItem(position);
+        TaskEntity taskEntity = getItem(position);
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_item, parent, false);
         }
@@ -39,18 +41,18 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM");
 
-        if (taskItem.getDate() != null) {
-            dateItem.setText(dateFormat.format(taskItem.getDate().getTime()));
+        if (taskEntity.getDate() != null) {
+            dateItem.setText(taskEntity.getDate());
         } else {
             dateItem.setText("-");
         }
 
-        nameItem.setText(taskItem.getName());
+        nameItem.setText(taskEntity.getTitle());
         nameItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                TaskInfoFragment taskInfoFragment = new TaskInfoFragment(taskItem);
+                TaskInfoFragment taskInfoFragment = new TaskInfoFragment(taskEntity);
 
                 activity.getSupportFragmentManager()
                         .beginTransaction()
@@ -63,7 +65,7 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteTask(taskItem);
+                deleteTask(taskEntity);
             }
         });
         return convertView;
@@ -74,7 +76,7 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 
     }
 
-    private void deleteTask(TaskItem taskItem){
+    private void deleteTask(TaskEntity taskEntity){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Delete")
                 .setMessage("Are you want to delete task?")
@@ -82,10 +84,10 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DataBaseManager dataBaseManager = DataBaseManager.instanceOfDataBase(getContext());
-                        dataBaseManager.deleteTaskFromDB(taskItem.getId());
+                        MyApplication app = (MyApplication) getContext().getApplicationContext();
+                        TasksRepository repo = app.getTasksRepository();
+                        repo.delete(taskEntity);
 
-                        TaskItem.getTasksArray().remove(taskItem);
                         notifyDataSetChanged();
                     }
                 })

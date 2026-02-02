@@ -7,6 +7,7 @@
         android:maxSdkVersion="32" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,10 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calendar">
         <activity
-            android:name=".Templates.addTaskTemplate"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
+            android:name=".Templates.MainTemplate"
             android:exported="false" />
         <activity
             android:name=".TasksList.TasksList"

@@ -21,11 +21,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.calendar.DataBaseManager;
+import com.example.calendar.DataBase.CalendarTranslator;
+import com.example.calendar.DataBase.TasksTable.TaskEntity;
+import com.example.calendar.DataBase.TasksTable.TasksRepository;
 import com.example.calendar.MainActivity;
+import com.example.calendar.MyApplication;
 import com.example.calendar.R;
-import com.example.calendar.TasksList.TaskItem;
-import com.example.calendar.TasksList.TasksAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,9 +41,8 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
     private String nameTask, descriptionTask;
     private int id;
     private Calendar dateTask = null, timeStart = null, timeEnd = null;
-    TaskItem deleteItem = null;
+    TaskEntity deleteItem = null;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
 
 
@@ -68,28 +68,33 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
         backBtn = findViewById(R.id.back);
         TimeFragment timeFragment = new TimeFragment();
 
-       deleteItem = getIntent().getParcelableExtra("edit_task", TaskItem.class);
+        TasksRepository repo = ((MyApplication) getApplication()).getTasksRepository();
 
-       if(deleteItem != null){
-           nameInp.setText(deleteItem.getName());
-           descriptionInp.setText(deleteItem.getDescription());
-           dateTask = deleteItem.getDate();
-           choseDateBtn.setText(dateFormat.format(dateTask.getTime()));
+        int taskId = getIntent().getIntExtra("edit_task_id", -1);
+        if (taskId != -1) {
+            repo.getById(taskId).observe(this, task -> {
+                if (task == null) return;
 
-           if(deleteItem.getTimeStart() != null && deleteItem.getTimeEnd() != null){
-                timeSwitch.setChecked(true);
-                String start = (deleteItem.getTimeStart() != null) ? timeFormat.format(deleteItem.getTimeStart().getTime()) : "-";
-                String end = (deleteItem.getTimeEnd() != null) ? timeFormat.format(deleteItem.getTimeEnd().getTime()) : "-";
-                timeTxt.setText(start + " - " + end);
-               timeTxt.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       timeButtonListener();
-                   }
-               });
-           }
+                deleteItem = task;
 
-       }
+                nameInp.setText(task.getTitle());
+                descriptionInp.setText(task.getDescription());
+
+                dateTask = CalendarTranslator.getDateFromString(task.getDate());
+                choseDateBtn.setText(task.getDate());
+
+                if (task.getStart() != null && task.getEnd() != null) {
+                    timeSwitch.setChecked(true);
+
+                    String start = task.getStart();
+                    String end = task.getEnd();
+                    timeTxt.setText(start + " - " + end);
+
+                    timeTxt.setOnClickListener(v -> timeButtonListener());
+                }
+            });
+        }
+
 
         choseDateBtn.setOnClickListener(new  View.OnClickListener() {
             @Override
@@ -185,18 +190,18 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
     }
 
     private void saveData(){
-        DataBaseManager dataBaseManager = DataBaseManager.instanceOfDataBase(AddTask.this);
-        id = TaskItem.getTasksArray().size();
+        TasksRepository repo = ((MyApplication) getApplication()).getTasksRepository();
 
         if(deleteItem != null){
-            dataBaseManager.deleteTaskFromDB(deleteItem.getId());
-            TaskItem.getTasksArray().remove(deleteItem);
-            TasksAdapter adapter = new TasksAdapter(this, TaskItem.getTasksArray());
+            repo.delete(deleteItem);
         }
 
-        TaskItem taskItem = new TaskItem(id, nameTask, descriptionTask, dateTask, timeStart, timeEnd);
-        TaskItem.getTasksArray().add(taskItem);
-        dataBaseManager.addTask(taskItem);
+        TaskEntity taskEntity = new TaskEntity(nameTask,
+                descriptionTask,
+                CalendarTranslator.getStringFromDate(dateTask),
+                CalendarTranslator.getStringFromTime(timeStart),
+                CalendarTranslator.getStringFromTime(timeEnd));
+        repo.insert(taskEntity);
 
         Intent intent = new Intent(AddTask.this, MainActivity.class);
         startActivity(intent);
@@ -213,9 +218,7 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
     @Override
     public void SendDate(Calendar calendar) {
         dateTask = calendar;
-        String formattedDate = dateFormat.format(dateTask.getTime());
-
-        choseDateBtn.setText(formattedDate);
+        choseDateBtn.setText(CalendarTranslator.getStringFromDate(dateTask));
     }
 
     @Override
