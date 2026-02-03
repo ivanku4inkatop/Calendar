@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTask.AddTask">
+    tools:context=".BasicTasks.AddTask.AddTask">
 
     <Button
         android:id="@+id/back"

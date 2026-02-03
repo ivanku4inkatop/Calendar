@@ -17,13 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calendar">
         <activity
+            android:name=".RoutineTasks.ChangeRoutine"
+            android:exported="false" />
+        <activity
+            android:name=".RoutineTasks.RoutineTasks"
+            android:exported="false" />
+        <activity
             android:name=".Templates.MainTemplate"
             android:exported="false" />
         <activity
-            android:name=".TasksList.TasksList"
+            android:name=".BasicTasks.TasksList.TasksList"
             android:exported="false" />
         <activity
-            android:name=".AddTask.AddTask"
+            android:name=".BasicTasks.AddTask.AddTask"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

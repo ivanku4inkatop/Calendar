@@ -6,22 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
-    tools:context=".BasicTasks.TasksList.TasksList">
+    tools:context=".RoutineTasks.RoutineTasks">
 
     <ListView
-        android:id="@+id/tasksListView"
+        android:id="@+id/daysListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
     </ListView>
-
-    <FrameLayout
-        android:id="@+id/infoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

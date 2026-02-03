@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.constraintlayout)
 
     implementation(libs.room.runtime)
+    implementation(libs.fragment)
     annotationProcessor(libs.room.compiler)
 
     implementation(libs.recyclerview)

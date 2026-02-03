@@ -4,13 +4,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.calendar.DataBase.RoutineTable.RoutineDao;
+import com.example.calendar.DataBase.RoutineTable.RoutineEntity;
 import com.example.calendar.DataBase.TasksTable.TaskEntity;
 import com.example.calendar.DataBase.TasksTable.TasksDao;
 
-@Database(entities = {TaskEntity.class}, version = 1)
+@Database(entities = {TaskEntity.class, RoutineEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     public abstract TasksDao tasksDao();
+    public abstract RoutineDao routineDao();
 
     public static AppDatabase getInstance(Context context){
         if (INSTANCE == null){
@@ -20,7 +23,8 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "calendar_db"
-                            ).build();
+                            ).fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }

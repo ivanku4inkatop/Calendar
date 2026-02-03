@@ -21,5 +21,8 @@
     <string name="start">Start:</string>
     <string name="end">End:</string>
     <string name="description">Description…</string>
+    <string name="sidebar">Sidebar</string>
     <string name="edit">EDIT</string>
+    <string name="show_tasks">All Tasks</string>
+    <string name="show_routine">Your Routine</string>
 </resources>

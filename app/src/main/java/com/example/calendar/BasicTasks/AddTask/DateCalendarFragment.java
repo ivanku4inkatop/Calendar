@@ -1,4 +1,4 @@
-package com.example.calendar.AddTask;
+package com.example.calendar.BasicTasks.AddTask;
 
 import android.app.Activity;
 import android.content.Context;

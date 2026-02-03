@@ -1,4 +1,4 @@
-package com.example.calendar.DataBase;
+package com.example.calendar.Templates;
 
 import android.annotation.SuppressLint;
 
@@ -7,12 +7,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-public class CalendarTranslator {
+public class StaticMethods {
     @SuppressLint("SimpleDateFormat")
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @SuppressLint("SimpleDateFormat")
     private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+    private static final List<String> days = List.of(
+            "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday", "Sunday");
 
     public static String getStringFromDate(Calendar date) {
         if(date == null){
@@ -54,5 +59,12 @@ public class CalendarTranslator {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public static String getDay(int num){
+        if (num >= 0 && num < days.size()) {
+            return days.get(num);
+        }
+        return "Unknown";
     }
 }

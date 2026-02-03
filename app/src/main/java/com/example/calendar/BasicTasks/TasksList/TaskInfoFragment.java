@@ -1,4 +1,4 @@
-package com.example.calendar.TasksList;
+package com.example.calendar.BasicTasks.TasksList;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.calendar.AddTask.AddTask;
+import com.example.calendar.BasicTasks.AddTask.AddTask;
 import com.example.calendar.DataBase.TasksTable.TaskEntity;
 import com.example.calendar.R;
 

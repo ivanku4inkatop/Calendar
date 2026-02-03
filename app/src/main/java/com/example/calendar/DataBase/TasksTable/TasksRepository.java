@@ -15,7 +15,6 @@ public class TasksRepository {
         dao = AppDatabase.getInstance(context).tasksDao();
     }
 
-    // WRITE — через executor
     public void insert(TaskEntity task) {
         DatabaseExecutor.executor.execute(() -> dao.insert(task));
     }

@@ -1,4 +1,4 @@
-package com.example.calendar.AddTask;
+package com.example.calendar.BasicTasks.AddTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.calendar.DataBase.CalendarTranslator;
+import com.example.calendar.Templates.StaticMethods;
 import com.example.calendar.DataBase.TasksTable.TaskEntity;
 import com.example.calendar.DataBase.TasksTable.TasksRepository;
 import com.example.calendar.MainActivity;
@@ -80,7 +80,7 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
                 nameInp.setText(task.getTitle());
                 descriptionInp.setText(task.getDescription());
 
-                dateTask = CalendarTranslator.getDateFromString(task.getDate());
+                dateTask = StaticMethods.getDateFromString(task.getDate());
                 choseDateBtn.setText(task.getDate());
 
                 if (task.getStart() != null && task.getEnd() != null) {
@@ -198,9 +198,9 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
 
         TaskEntity taskEntity = new TaskEntity(nameTask,
                 descriptionTask,
-                CalendarTranslator.getStringFromDate(dateTask),
-                CalendarTranslator.getStringFromTime(timeStart),
-                CalendarTranslator.getStringFromTime(timeEnd));
+                StaticMethods.getStringFromDate(dateTask),
+                StaticMethods.getStringFromTime(timeStart),
+                StaticMethods.getStringFromTime(timeEnd));
         repo.insert(taskEntity);
 
         Intent intent = new Intent(AddTask.this, MainActivity.class);
@@ -218,7 +218,7 @@ public class AddTask extends AppCompatActivity implements DateCalendarFragment.S
     @Override
     public void SendDate(Calendar calendar) {
         dateTask = calendar;
-        choseDateBtn.setText(CalendarTranslator.getStringFromDate(dateTask));
+        choseDateBtn.setText(StaticMethods.getStringFromDate(dateTask));
     }
 
     @Override

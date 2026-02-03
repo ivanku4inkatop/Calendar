@@ -1,4 +1,4 @@
-package com.example.calendar.TasksList;
+package com.example.calendar.BasicTasks.TasksList;
 
 import android.app.AlertDialog;
 import android.content.Context;
