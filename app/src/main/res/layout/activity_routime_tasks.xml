@@ -16,4 +16,12 @@
 
     </ListView>
 
+    <FrameLayout
+        android:id="@+id/dayInfoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

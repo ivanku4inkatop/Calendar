@@ -1,17 +1,16 @@
-package com.example.calendar.RoutineTasks;
+package com.example.calendar.RoutineTasks.EditRoutine;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calendar.DataBase.RoutineTable.RoutineEntity;
 import com.example.calendar.DataBase.RoutineTable.RoutineRepository;
-import com.example.calendar.HoursFragment;
 import com.example.calendar.MyApplication;
 import com.example.calendar.R;
 import com.example.calendar.Templates.MainTemplate;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 public class ChangeRoutine extends MainTemplate {
-    private static final String TAG = "ChangeRoutine";
 
     private ChangeRoutineViewModel vm;
     private RoutineRepository repo;
@@ -38,14 +36,12 @@ public class ChangeRoutine extends MainTemplate {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate started");
 
         TextView dayName = findViewById(R.id.dayName);
         EditText tasksName = findViewById(R.id.nameTasksInput);
         Button saveButton = findViewById(R.id.addTaskButton);
 
         if (dayName == null || tasksName == null || saveButton == null) {
-            Log.e(TAG, "Views not found!");
             Toast.makeText(this, "Error loading layout", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -55,7 +51,6 @@ public class ChangeRoutine extends MainTemplate {
         repo = ((MyApplication) getApplication()).getRoutineRepository();
 
         dayId = getIntent().getIntExtra("day_id", -1);
-        Log.d(TAG, "dayId: " + dayId);
 
         if (dayId < 0 || dayId >= 7) {
             Toast.makeText(this, "Invalid day", Toast.LENGTH_SHORT).show();
@@ -70,7 +65,6 @@ public class ChangeRoutine extends MainTemplate {
         vm.setTextToChange("");
 
         repo.getTasksForDay(dayId).observe(this, tasks -> {
-            Log.d(TAG, "Tasks received: " + (tasks != null ? tasks.size() : "null"));
             if (tasks != null) {
                 tasksList = new ArrayList<>(tasks);
                 vm.setTasks(tasks);
@@ -84,6 +78,9 @@ public class ChangeRoutine extends MainTemplate {
             if (text != null && !text.isEmpty()) {
                 tasksName.setText(text);
             }
+            else{
+                tasksName.setText("");
+            }
         });
 
         if (savedInstanceState == null) {
@@ -91,9 +88,7 @@ public class ChangeRoutine extends MainTemplate {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.hoursFrame, new HoursFragment())
                         .commitNow();
-                Log.d(TAG, "Fragment added");
             } catch (Exception e) {
-                Log.e(TAG, "Error adding fragment", e);
                 Toast.makeText(this, "Error loading hours", Toast.LENGTH_SHORT).show();
             }
         }
@@ -101,8 +96,6 @@ public class ChangeRoutine extends MainTemplate {
         saveButton.setOnClickListener(v -> {
             saveRoutine(tasksName.getText().toString());
         });
-
-        Log.d(TAG, "onCreate finished");
     }
 
     private void saveRoutine(String name) {
@@ -113,37 +106,65 @@ public class ChangeRoutine extends MainTemplate {
             return;
         }
 
-        if (name == null || name.trim().isEmpty()) {
-            Toast.makeText(this, "Please enter task name!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         name = name.trim();
 
         try {
             if (hoursSet.size() == 1) {
                 int selectedHour = hoursSet.iterator().next();
-
+                Boolean inList = false;
                 for (RoutineEntity item : tasksList) {
                     if (item.hour == selectedHour) {
                         repo.delete(item.id);
+                        inList = true;
+                        break;
                     }
                 }
-
-                repo.insert(new RoutineEntity(name, dayId, selectedHour));
-                Toast.makeText(this, "Task updated!", Toast.LENGTH_SHORT).show();
+                if (name == null || name.trim().isEmpty()) {
+                    if (inList) {
+                        Toast.makeText(this, "Task deleted!!", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(this, "Please enter task name!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                else{
+                    repo.insert(new RoutineEntity(name, dayId, selectedHour));
+                    Toast.makeText(this, "Task updated!", Toast.LENGTH_SHORT).show();
+                }
 
             } else {
-                for (int hour : hoursSet) {
-                    repo.insert(new RoutineEntity(name, dayId, hour));
+                if (name == null || name.trim().isEmpty()) {
+                    Toast.makeText(this, "Please enter task name!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                Toast.makeText(this, hoursSet.size() + " tasks added!", Toast.LENGTH_SHORT).show();
+                else {
+                    for (int hour : hoursSet) {
+                        repo.insert(new RoutineEntity(name, dayId, hour));
+                    }
+                    Toast.makeText(this, hoursSet.size() + " tasks added!", Toast.LENGTH_SHORT).show();
+                }
             }
 
-            finish();
+            resetState();
         } catch (Exception e) {
-            Log.e(TAG, "Error saving routine", e);
             Toast.makeText(this, "Error saving: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void resetState() {
+        vm.setHoursToSave(new HashSet<>());
+        vm.setTextToChange("");
+
+        EditText tasksName = findViewById(R.id.nameTasksInput);
+        if (tasksName != null) {
+            tasksName.setText("");
+        }
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.hoursFrame);
+        if (fragment instanceof HoursFragment) {
+            ((HoursFragment) fragment).resetSelection();
+        }
+    }
+
 }

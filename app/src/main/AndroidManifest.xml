@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calendar">
         <activity
-            android:name=".RoutineTasks.ChangeRoutine"
+            android:name=".RoutineTasks.EditRoutine.ChangeRoutine"
             android:exported="false" />
         <activity
             android:name=".RoutineTasks.RoutineTasks"

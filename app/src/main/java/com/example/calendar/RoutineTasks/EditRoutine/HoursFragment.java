@@ -1,8 +1,7 @@
-package com.example.calendar;
+package com.example.calendar.RoutineTasks.EditRoutine;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,7 +14,7 @@ import android.widget.GridLayout;
 import android.widget.Toast;
 
 import com.example.calendar.DataBase.RoutineTable.RoutineEntity;
-import com.example.calendar.RoutineTasks.ChangeRoutineViewModel;
+import com.example.calendar.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,11 +36,6 @@ public class HoursFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hours, container, false);
         grid = view.findViewById(R.id.gridHours);
-
-        if (grid == null) {
-            return view;
-        }
-
         vm = new ViewModelProvider(requireActivity()).get(ChangeRoutineViewModel.class);
 
         vm.getTasks().observe(getViewLifecycleOwner(), tasks -> {
@@ -53,7 +47,6 @@ public class HoursFragment extends Fragment {
                 for (RoutineEntity task : tasksList) {
                     tasksMap.put(task.getHour(), task.getTitle());
                 }
-
                 createHourButtons();
             }
         });
@@ -87,30 +80,25 @@ public class HoursFragment extends Fragment {
 
     private void setupBusyHourButton(Button btn, int hour, String taskTitle) {
         btn.setOnClickListener(v -> {
-            if (selectedHours.isEmpty()) {
-                if (busyHour == -1) {
-                    busyHour = hour;
-                    btn.setBackgroundColor(Color.BLUE);
-                    vm.setTextToChange(taskTitle);
-                    selectedHours.add(hour);
-                    vm.setHoursToSave(selectedHours);
-                } else {
-                    if (busyHour == hour) {
-                        busyHour = -1;
-                        btn.setBackgroundColor(Color.GREEN);
-                        vm.setTextToChange("");
-                        selectedHours.remove(hour);
-                        vm.setHoursToSave(selectedHours);
-                    } else {
-                        Toast.makeText(getContext(),
-                                "You can't select this item!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
+            if (selectedHours.isEmpty() && busyHour == -1) {
+                busyHour = hour;
+                btn.setBackgroundColor(Color.BLUE);
+                vm.setTextToChange(taskTitle);
+                selectedHours.add(hour);
+                vm.setHoursToSave(selectedHours);
             } else {
-                Toast.makeText(getContext(),
-                        "You can't select this item!",
-                        Toast.LENGTH_SHORT).show();
+                if (busyHour == hour && selectedHours.size() == 1) {
+                    busyHour = -1;
+                    btn.setBackgroundColor(Color.GREEN);
+                    vm.setTextToChange("");
+                    selectedHours.remove(hour);
+                    vm.setHoursToSave(selectedHours);
+                }
+                else {
+                    Toast.makeText(getContext(),
+                            "You can't select this item!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -132,6 +120,12 @@ public class HoursFragment extends Fragment {
                 vm.setHoursToSave(selectedHours);
             }
         });
+    }
+
+    public void resetSelection() {
+        selectedHours.clear();
+        busyHour = -1;
+        tasksMap.clear();
     }
 
 }

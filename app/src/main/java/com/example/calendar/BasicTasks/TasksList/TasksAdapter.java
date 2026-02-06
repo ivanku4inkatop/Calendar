@@ -39,7 +39,6 @@ public class TasksAdapter extends ArrayAdapter<TaskEntity> {
         TextView dateItem = convertView.findViewById(R.id.dateItem);
         ImageButton deleteBtn = convertView.findViewById(R.id.deleteButton);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM");
 
         if (taskEntity.getDate() != null) {
             dateItem.setText(taskEntity.getDate());
@@ -48,10 +47,8 @@ public class TasksAdapter extends ArrayAdapter<TaskEntity> {
         }
 
         nameItem.setText(taskEntity.getTitle());
-        nameItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        nameItem.setOnClickListener(v -> {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 TaskInfoFragment taskInfoFragment = new TaskInfoFragment(taskEntity);
 
                 activity.getSupportFragmentManager()
@@ -59,21 +56,13 @@ public class TasksAdapter extends ArrayAdapter<TaskEntity> {
                         .replace(R.id.infoLayout, taskInfoFragment)
                         .addToBackStack(null)
                         .commit();
-            }
+
         });
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        deleteBtn.setOnClickListener(v ->{
                 deleteTask(taskEntity);
-            }
-        });
+            });
         return convertView;
-    }
-
-
-    private void showInfo(){
-
     }
 
     private void deleteTask(TaskEntity taskEntity){

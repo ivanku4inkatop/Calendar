@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.calendar.BasicTasks.TasksList.TaskInfoFragment;
 import com.example.calendar.R;
+import com.example.calendar.RoutineTasks.EditRoutine.ChangeRoutine;
 import com.example.calendar.Templates.StaticMethods;
 
 import java.util.List;
@@ -38,10 +41,13 @@ public class DaysAdapter extends ArrayAdapter<Integer> {
         countItem.setText("Tasks: " + tasksNumber);
 
         nameItem.setOnClickListener(v -> {
-            Context context = getContext();
-            Intent intent = new Intent(context, ChangeRoutine.class);
-            intent.putExtra("day_id", position);
-            context.startActivity(intent);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            DayInfoFragment fragment = DayInfoFragment.newInstance(position);
+
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.dayInfoLayout, fragment)
+                    .commit();
         });
 
 
