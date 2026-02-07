@@ -5,16 +5,16 @@ import androidx.room.*;
 @Entity(tableName = "routine")
 public class RoutineEntity {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo(name = "title")
-    public String title;
+    private String title;
 
     @ColumnInfo(name = "dayOfWeek")
-    public int dayOfWeek;
+    private int dayOfWeek;
 
     @ColumnInfo(name = "hour")
-    public int hour;
+    private int hour;
 
     public RoutineEntity(String title, int dayOfWeek, int hour) {
         this.title = title;
@@ -26,4 +26,9 @@ public class RoutineEntity {
     public String getTitle() {return title;}
     public int getDayOfWeek() {return dayOfWeek;}
     public int getHour() {return hour;}
+
+    public void setId(int id) {this.id = id;}
+    public void setTitle(String title) {this.title = title;}
+    public void setDayOfWeek(int dayOfWeek) {this.dayOfWeek = dayOfWeek;}
+    public void setHour(int hour) {this.hour = hour;}
 }

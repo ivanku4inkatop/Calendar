@@ -113,8 +113,8 @@ public class ChangeRoutine extends MainTemplate {
                 int selectedHour = hoursSet.iterator().next();
                 Boolean inList = false;
                 for (RoutineEntity item : tasksList) {
-                    if (item.hour == selectedHour) {
-                        repo.delete(item.id);
+                    if (item.getHour() == selectedHour) {
+                        repo.delete(item.getId());
                         inList = true;
                         break;
                     }

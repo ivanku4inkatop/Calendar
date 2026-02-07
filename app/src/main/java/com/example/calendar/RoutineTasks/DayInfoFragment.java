@@ -84,7 +84,7 @@ public class DayInfoFragment extends FragmentInfoTemplate {
                     boolean found = false;
 
                     for(RoutineEntity item : tasks){
-                        if (item.hour == i){
+                        if (item.getHour() == i){
                             tasksLine = LayoutInflater.from(getContext())
                                     .inflate(R.layout.task_day_slot, schedule, false);
 
@@ -92,10 +92,10 @@ public class DayInfoFragment extends FragmentInfoTemplate {
                             TextView time = tasksLine.findViewById(R.id.timeSlotItem);
 
                             if (name != null) {
-                                name.setText(item.title);
+                                name.setText(item.getTitle());
                             }
                             if (time != null) {
-                                time.setText(item.hour + ":00");
+                                time.setText(item.getHour() + ":00");
                             }
 
                             schedule.addView(tasksLine);

@@ -34,4 +34,8 @@ public class TasksRepository {
     public LiveData<TaskEntity> getById(int id) {
         return dao.getById(id);
     }
+
+    public LiveData<List<TaskEntity>> getByDate(String date){
+        return dao.getByDate(date);
+    }
 }

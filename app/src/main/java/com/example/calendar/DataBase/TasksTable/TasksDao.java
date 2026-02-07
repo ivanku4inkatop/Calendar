@@ -22,4 +22,7 @@ public interface TasksDao {
 
     @Query("SELECT * FROM tasks WHERE id = :id")
     LiveData<TaskEntity> getById(int id);
+
+    @Query("SELECT * FROM tasks WHERE date = :date")
+    LiveData<List<TaskEntity>> getByDate(String date);
 }
